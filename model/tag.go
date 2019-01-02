@@ -14,9 +14,11 @@ type Tag struct {
 }
 
 // 不存在就创建Tag
+/*
 func init() {
 	db.AutoMigrate(&Tag{})
 }
+*/
 
 // 获取tags
 func GetTags(pageNum int, PageSize int, maps interface{}) (tags []Tag) {

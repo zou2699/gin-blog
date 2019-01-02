@@ -35,6 +35,8 @@ func init() {
 
 	//debug
 	db.LogMode(true)
+
+	db.AutoMigrate(&Tag{}, &Article{})
 }
 
 func CloseDB() {
