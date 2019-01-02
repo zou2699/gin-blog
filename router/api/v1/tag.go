@@ -3,6 +3,7 @@ package v1
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/zou2699/learnGin2/model"
+	"github.com/zou2699/learnGin2/pkg/app"
 	"github.com/zou2699/learnGin2/pkg/e"
 	"github.com/zou2699/learnGin2/pkg/setting"
 	"github.com/zou2699/learnGin2/pkg/utils"
@@ -43,100 +44,117 @@ func GetTags(c *gin.Context) {
 
 // 新增文章标签
 func AddTag(c *gin.Context) {
+	appG := app.Gin{C: c}
+	code := e.Success
 	var tag model.Tag
+
 	err := c.ShouldBind(&tag)
 	if err != nil {
+		code = e.InternalServerError
 		log.Println("bind tag Error of Addtag ", err.Error())
+		appG.Response(http.StatusInternalServerError, code, err.Error())
+		return
 	}
 
 	// todo validation
-	code := e.Success
+
 	model.AddTag(tag.Name, tag.State, tag.CreatedBy)
-	c.JSON(http.StatusOK, gin.H{
-		"code": code,
-		"msg":  e.GetMsg(code),
-		"data": make(map[string]interface{}),
-	})
+	appG.Response(http.StatusOK, code, nil)
 }
 
 // 编辑文章标签
 func EditTag(c *gin.Context) {
+	appG := app.Gin{C: c}
+	code := e.Success
 	var tag model.Tag
+
 	err := c.ShouldBind(&tag)
 	// set delete to nil
 	tag.DeletedAt = nil
-	log.Println(tag)
+
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
+		code = e.InternalServerError
+		appG.Response(http.StatusInternalServerError, code, err.Error())
+
+		return
+	}
+	tag.ID = id
+
+	if err != nil {
+		code = e.InternalServerError
+		appG.Response(http.StatusInternalServerError, code, err.Error())
+
 		log.Println("bind tag Error of EditTag", err.Error())
+
+		return
 	}
 
 	// todo validation
 
-	code := e.Success
 	exists, err := model.ExistTagByID(tag.ID)
-	log.Println(tag.ID, exists, err)
+
 	if err != nil {
-		log.Println("EditTag Error", err.Error())
 		code = e.InternalServerError
+		appG.Response(http.StatusInternalServerError, code, err.Error())
+
+		log.Println("EditTag Error", err.Error())
+
+		return
 	}
+
 	if !exists {
 		code = e.ErrorNotExistTag
+		appG.Response(http.StatusNotFound, code, nil)
+
+		return
 	}
 
 	err = model.EditTag(tag.ID, tag)
 	if err != nil {
 		code = e.InternalServerError
+		appG.Response(http.StatusInternalServerError, code, err.Error())
+
+		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"code": code,
-		"msg":  e.GetMsg(code),
-		"data": make(map[string]interface{}),
-	})
+	appG.Response(http.StatusOK, code, nil)
 }
 
 // 删除文章标签
 func DeleteTag(c *gin.Context) {
-	id, err := strconv.Atoi(c.Param("id"))
+	appG := app.Gin{C: c}
 	code := e.Success
+
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		code = e.InternalServerError
-		c.JSON(http.StatusOK, gin.H{
-			"code": code,
-			"msg":  e.GetMsg(code),
-			"data": err.Error(),
-		})
+		appG.Response(http.StatusInternalServerError, code, err.Error())
+
 		return
 	}
 
 	exist, err := model.ExistTagByID(id)
 	if err != nil {
 		code = e.InternalServerError
+		appG.Response(http.StatusInternalServerError, code, err.Error())
 
 		return
 	}
 	if !exist {
 		code = e.ErrorNotExistTag
-		c.JSON(http.StatusOK, gin.H{
-			"code": code,
-			"msg":  e.GetMsg(code),
-			"data": err.Error(),
-		})
+		appG.Response(http.StatusNotFound, code, nil)
+
 		return
 	}
+
 	err = model.DeleteTag(id)
 	if err != nil {
 		code = e.InternalServerError
-		c.JSON(http.StatusOK, gin.H{
-			"code": code,
-			"msg":  e.GetMsg(code),
-			"data": err.Error(),
-		})
+		appG.Response(http.StatusInternalServerError, code, err.Error())
+
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"code": code,
-		"msg":  e.GetMsg(code),
-		"data": make(map[string]interface{}),
-	})
+
+	appG.Response(http.StatusOK, code, nil)
 }

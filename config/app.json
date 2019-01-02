@@ -1,11 +1,11 @@
 {
   "database": {
     "dialect": "mysql",
-    "database": "golang123",
+    "database": "blog",
     "user": "zouhl",
     "password": "passw0rd",
     "charset": "utf8mb4",
-    "host": "127.0.0.1",
+    "host": "192.168.3.149",
     "port": 3306,
     "max_idle_conns": 5,
     "max_open_conns": 10,
