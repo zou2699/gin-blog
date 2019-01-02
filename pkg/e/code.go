@@ -1,9 +1,9 @@
 package e
 
 const (
-	Success       = 200
-	Error         = 500
-	InvalidParams = 400
+	Success             = 200
+	InternalServerError = 500
+	InvalidParams       = 400
 
 	ErrorExistTag        = 10001
 	ErrorNotExistTag     = 10002
@@ -20,5 +20,5 @@ func GetMsg(code int) string {
 	if ok {
 		return msg
 	}
-	return MsgFlags[Error]
+	return MsgFlags[InternalServerError]
 }

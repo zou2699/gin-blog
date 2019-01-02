@@ -2,16 +2,19 @@ package model
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/zou2699/learnGin2/utils/setting"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/zou2699/learnGin2/pkg/setting"
 	"log"
+	"time"
 )
 
 var db *gorm.DB
 
 type Model struct {
-	ID         int `gorm:"primary_key" json:"id"`
-	CreatedOn  int `json:"created_on"`
-	ModifiedOn int `json:"modified_on"`
+	ID        int `form:"id" gorm:"primary_key" json:"id" bind:"required"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt *time.Time `sql:"index"`
 }
 
 func init() {
@@ -29,6 +32,9 @@ func init() {
 	db.SingularTable(true)
 	db.DB().SetMaxIdleConns(10)
 	db.DB().SetMaxOpenConns(100)
+
+	//debug
+	db.LogMode(true)
 }
 
 func CloseDB() {

@@ -10,21 +10,22 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/zou2699/learnGin2/utils/setting"
+	"github.com/zou2699/learnGin2/pkg/setting"
+	"github.com/zou2699/learnGin2/router"
 	"log"
 	"net/http"
 	"time"
 )
 
 func main() {
-	router := gin.Default()
-	router.GET("/test", func(c *gin.Context) {
+	r := router.InitRouter()
+	r.GET("/test", func(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "OK"})
 	})
 
 	s := &http.Server{
 		Addr:           fmt.Sprintf(":%v", setting.Server.Port),
-		Handler:        router,
+		Handler:        r,
 		ReadTimeout:    time.Duration(setting.Server.ReadTimeout) * time.Second,
 		WriteTimeout:   time.Duration(setting.Server.WriteTimeout) * time.Second,
 		MaxHeaderBytes: 1 << 20, //1MB

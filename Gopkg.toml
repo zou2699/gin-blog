@@ -29,9 +29,6 @@
   go-tests = true
   unused-packages = true
 
-[[constraint]]
-  name = "github.com/go-ini/ini"
-  version = "1.40.0"
 
 [[constraint]]
   name = "github.com/gin-gonic/gin"
