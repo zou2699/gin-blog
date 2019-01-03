@@ -11,10 +11,10 @@ import (
 var db *gorm.DB
 
 type Model struct {
-	ID        int `form:"id" gorm:"primary_key" json:"id" bind:"required"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt *time.Time `sql:"index"`
+	ID        int        `form:"id" gorm:"primary_key" json:"id" bind:"required"`
+	CreatedAt time.Time  `form:"-"`
+	UpdatedAt time.Time  `form:"-"`
+	DeletedAt *time.Time `sql:"index" form:"-"`
 }
 
 func init() {

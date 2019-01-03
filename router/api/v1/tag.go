@@ -70,7 +70,7 @@ func EditTag(c *gin.Context) {
 
 	err := c.ShouldBind(&tag)
 	// set delete to nil
-	tag.DeletedAt = nil
+	//tag.DeletedAt = nil
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

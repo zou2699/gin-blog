@@ -10,6 +10,9 @@ import (
 func Getpage(c *gin.Context) int {
 	result := 0
 
+	if c.Query("page") == "" {
+		return result
+	}
 	page, err := strconv.Atoi(c.Query("page"))
 	if err != nil {
 		log.Println("Query page ERROR", err.Error())
