@@ -10,6 +10,7 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/zou2699/learnGin2/model"
 	"github.com/zou2699/learnGin2/pkg/setting"
 	"github.com/zou2699/learnGin2/router"
 	"log"
@@ -19,8 +20,8 @@ import (
 
 func main() {
 	r := router.InitRouter()
-	r.GET("/test", func(c *gin.Context) {
-		c.JSON(200, gin.H{"message": "OK"})
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{"message": "pong"})
 	})
 
 	s := &http.Server{
@@ -35,4 +36,5 @@ func main() {
 	if err != nil {
 		log.Fatal("ListenAndServe Error:", err.Error())
 	}
+	defer model.CloseDB()
 }

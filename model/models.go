@@ -36,7 +36,7 @@ func init() {
 	//debug
 	db.LogMode(true)
 
-	db.AutoMigrate(&Tag{}, &Article{})
+	db.AutoMigrate(&Tag{}, &Article{}, &Auth{})
 }
 
 func CloseDB() {
