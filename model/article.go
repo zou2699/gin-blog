@@ -2,7 +2,6 @@ package model
 
 import (
 	"github.com/jinzhu/gorm"
-	"log"
 )
 
 type Article struct {
@@ -55,10 +54,10 @@ func GetArticles(pageNum int, pageSize int, maps interface{}) (articles []*Artic
 
 func GetArticle(id int) (*Article, error) {
 	var article Article
-	log.Println(article.Tag)
+
 	db.Where("id = ?", id).First(&article)
+
 	err := db.Model(&article).Related(&article.Tag, "TagID").Error
-	log.Println("####", article)
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return nil, err
 	}
