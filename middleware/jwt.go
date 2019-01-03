@@ -21,7 +21,7 @@ func Jwt() gin.HandlerFunc {
 		if c.Query("token") == "" {
 			token = c.GetHeader("token")
 		} else {
-			token = c.GetHeader("token")
+			token = c.Query("token")
 		}
 
 		if token == "" {
