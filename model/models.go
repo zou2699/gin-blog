@@ -34,7 +34,7 @@ func init() {
 	db.DB().SetMaxOpenConns(100)
 
 	//debug
-	db.LogMode(true)
+	db.LogMode(setting.DBConfig.ShowSql)
 
 	db.AutoMigrate(&Tag{}, &Article{}, &Auth{})
 }

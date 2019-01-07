@@ -20,8 +20,11 @@ import (
 
 func main() {
 	r := router.InitRouter()
+
 	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{"message": "pong"})
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
 	})
 
 	s := &http.Server{

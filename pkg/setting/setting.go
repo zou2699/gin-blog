@@ -55,6 +55,7 @@ type dBConfig struct {
 	MaxIdleConns int    `json:"max_idle_conns"`
 	MaxOpenConns int    `json:"max_open_conns"`
 	TablePrefix  string `json:"table_prefix"`
+	ShowSql      bool   `json:"show_sql"`
 }
 
 var DBConfig dBConfig

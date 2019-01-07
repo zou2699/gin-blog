@@ -21,8 +21,16 @@ func GetAuth(c *gin.Context) {
 		err  error
 	)
 
-	username := c.Query("username")
-	password := c.Query("password")
+	username := c.Request.FormValue("username")
+	password := c.Request.FormValue("password")
+
+	//log.Println("user:",username,"pass:",password)
+	if (username == "") || (password == "") {
+		code = e.ErrorAuth
+		appG.Response(http.StatusUnauthorized, code, nil)
+
+		return
+	}
 
 	//todo validation
 	//a := Auth{Username: username, Password: password}
@@ -43,5 +51,7 @@ func GetAuth(c *gin.Context) {
 		return
 	}
 	data["token"] = token
-	appG.Response(http.StatusOK, code, data)
+	c.SetCookie("token", token, 3600, "/", "", false, true)
+	c.Redirect(http.StatusMovedPermanently, "/api/v1/articles")
+	//appG.Response(http.StatusOK, code, data)
 }

@@ -18,14 +18,16 @@ func Jwt() gin.HandlerFunc {
 		)
 
 		// 从url或者header提取token
-		if c.Query("token") == "" {
+		if c.Query("token") != "" {
+			token = c.Query("token")
+		} else if c.GetHeader("token") != "" {
 			token = c.GetHeader("token")
 		} else {
-			token = c.Query("token")
+			token, _ = c.Cookie("token")
 		}
 
 		if token == "" {
-			code = e.InvalidParams
+			code = e.ErrorAuthCheckTokenFail
 			appG.Response(http.StatusUnauthorized, code, nil)
 
 			c.Abort()

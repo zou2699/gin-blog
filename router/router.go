@@ -2,9 +2,9 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/zou2699/learnGin2/middleware"
 	"github.com/zou2699/learnGin2/router/api"
 	"github.com/zou2699/learnGin2/router/api/v1"
+	"github.com/zou2699/learnGin2/router/static"
 )
 
 func InitRouter() *gin.Engine {
@@ -16,9 +16,10 @@ func InitRouter() *gin.Engine {
 		    gin.SetMode(setting.RunMode)
 	*/
 	r := gin.Default()
-	r.GET("/auth", api.GetAuth)
+	r.POST("/auth", api.GetAuth)
+
 	apiv1 := r.Group("/api/v1")
-	apiv1.Use(middleware.Jwt())
+	//apiv1.Use(middleware.Jwt())
 	{
 		// tag
 		apiv1.GET("/tags", v1.GetTags)
@@ -38,5 +39,20 @@ func InitRouter() *gin.Engine {
 		apiv1.DELETE("/articles/:id", v1.DeleteArticle)
 	}
 
+	// web html
+
+	r.LoadHTMLGlob("web/**/*")
+	web := r.Group("/")
+	{
+		web.GET("/login", static.Loginhtml)
+		web.GET("/", static.Indexhtml)
+		web.GET("/blog", static.Bloghtml)
+	}
+
+	// static
+	r.Static("/static", "./static")
+
+	// favicon.ico
+	r.StaticFile("/favicon.ico", "./static/image/favicon.ico")
 	return r
 }
