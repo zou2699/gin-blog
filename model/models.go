@@ -1,11 +1,13 @@
 package model
 
 import (
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"github.com/zou2699/learnGin2/pkg/setting"
 	"log"
 	"time"
+
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
+
+	"gin-blog/pkg/setting"
 )
 
 var db *gorm.DB
@@ -33,7 +35,7 @@ func init() {
 	db.DB().SetMaxIdleConns(10)
 	db.DB().SetMaxOpenConns(100)
 
-	//debug
+	// debug
 	db.LogMode(setting.DBConfig.ShowSql)
 
 	db.AutoMigrate(&Tag{}, &Article{}, &Auth{})

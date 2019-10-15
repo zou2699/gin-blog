@@ -1,12 +1,14 @@
 package middleware
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/zou2699/learnGin2/pkg/app"
-	"github.com/zou2699/learnGin2/pkg/e"
-	"github.com/zou2699/learnGin2/pkg/utils"
 	"net/http"
 	"time"
+
+	"github.com/gin-gonic/gin"
+
+	"gin-blog/pkg/app"
+	"gin-blog/pkg/e"
+	"gin-blog/pkg/utils"
 )
 
 func Jwt() gin.HandlerFunc {

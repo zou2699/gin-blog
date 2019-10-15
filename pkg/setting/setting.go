@@ -11,8 +11,8 @@ func init() {
 	initJson()
 	initDB()
 	initServer()
-	//fmt.Println(Server)
-	//fmt.Println(DBConfig.URL)
+	// fmt.Println(Server)
+	// fmt.Println(DBConfig.URL)
 }
 
 var jsonData map[string]interface{}
@@ -24,8 +24,8 @@ func initJson() {
 		log.Fatal("LoadConfigError:", err.Error())
 	}
 
-	//configStr := string(bytes)
-	//fmt.Println(configStr)
+	// configStr := string(bytes)
+	// fmt.Println(configStr)
 
 	if err := json.Unmarshal(bytes, &jsonData); err != nil {
 		log.Fatal("JsonUnmarshalError:", err.Error())

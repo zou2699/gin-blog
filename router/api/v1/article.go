@@ -1,17 +1,19 @@
 package v1
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/zou2699/learnGin2/model"
-	"github.com/zou2699/learnGin2/pkg/app"
-	"github.com/zou2699/learnGin2/pkg/e"
-	"github.com/zou2699/learnGin2/pkg/setting"
-	"github.com/zou2699/learnGin2/pkg/utils"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
+
+	"gin-blog/model"
+	"gin-blog/pkg/app"
+	"gin-blog/pkg/e"
+	"gin-blog/pkg/setting"
+	"gin-blog/pkg/utils"
 )
 
-//获取单个文章
+// 获取单个文章
 func GetArticle(c *gin.Context) {
 	appG := app.Gin{C: c}
 	code := e.Success
@@ -46,7 +48,7 @@ func GetArticle(c *gin.Context) {
 	appG.Response(http.StatusOK, code, article)
 }
 
-//获取多个文章
+// 获取多个文章
 func GetArticles(c *gin.Context) {
 	appG := app.Gin{C: c}
 	code := e.Success
@@ -72,18 +74,18 @@ func GetArticles(c *gin.Context) {
 	appG.Response(http.StatusOK, code, data)
 }
 
-//新增文章
+// 新增文章
 func AddArticle(c *gin.Context) {
 	var (
 		appG    = app.Gin{C: c}
 		code    = e.Success
 		err     error
 		article model.Article
-		//data map[string]interface{}
+		// data map[string]interface{}
 	)
 
 	err = c.ShouldBind(&article)
-	//log.Printf("%+v\n", article)
+	// log.Printf("%+v\n", article)
 	if err != nil {
 		code = e.InternalServerError
 		appG.Response(http.StatusInternalServerError, code, err.Error())
@@ -102,7 +104,7 @@ func AddArticle(c *gin.Context) {
 		return
 	}
 
-	//data["tag_id"] = article.TagID
+	// data["tag_id"] = article.TagID
 	//	data["title"] = article.Title
 	//	data["desc"]= article.Desc
 	//	data["content"] = article.Content
@@ -119,14 +121,14 @@ func AddArticle(c *gin.Context) {
 	appG.Response(http.StatusOK, code, nil)
 }
 
-//修改文章
+// 修改文章
 func EditArticle(c *gin.Context) {
 	var (
 		appG    = app.Gin{C: c}
 		code    = e.Success
 		err     error
 		article model.Article
-		//data map[string]interface{}
+		// data map[string]interface{}
 	)
 
 	err = c.ShouldBind(&article)
@@ -136,7 +138,7 @@ func EditArticle(c *gin.Context) {
 		return
 	}
 
-	//获取文章id
+	// 获取文章id
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		code = e.InternalServerError
@@ -145,7 +147,7 @@ func EditArticle(c *gin.Context) {
 		return
 	}
 	article.ID = id
-	//log.Printf("%+v\n", article)
+	// log.Printf("%+v\n", article)
 
 	// 文章是否存在
 	exist, err := model.ExistArticleByID(article.ID)
@@ -182,7 +184,7 @@ func EditArticle(c *gin.Context) {
 	appG.Response(http.StatusOK, code, nil)
 }
 
-//删除文章
+// 删除文章
 func DeleteArticle(c *gin.Context) {
 	var (
 		appG = app.Gin{C: c}
@@ -190,7 +192,7 @@ func DeleteArticle(c *gin.Context) {
 		err  error
 	)
 
-	//获取文章id
+	// 获取文章id
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		code = e.InternalServerError

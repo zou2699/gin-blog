@@ -5,7 +5,7 @@
     "user": "zouhl",
     "password": "passw0rd",
     "charset": "utf8mb4",
-    "host": "192.168.3.149",
+    "host": "192.168.12.1",
     "port": 3306,
     "max_idle_conns": 5,
     "max_open_conns": 10,

@@ -1,9 +1,11 @@
 package utils
 
 import (
-	"github.com/dgrijalva/jwt-go"
-	"github.com/zou2699/learnGin2/pkg/setting"
 	"time"
+
+	"github.com/dgrijalva/jwt-go"
+
+	"gin-blog/pkg/setting"
 )
 
 var jwtSecret = []byte(setting.Server.JwtSecret)

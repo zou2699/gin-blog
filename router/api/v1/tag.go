@@ -1,15 +1,17 @@
 package v1
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/zou2699/learnGin2/model"
-	"github.com/zou2699/learnGin2/pkg/app"
-	"github.com/zou2699/learnGin2/pkg/e"
-	"github.com/zou2699/learnGin2/pkg/setting"
-	"github.com/zou2699/learnGin2/pkg/utils"
 	"log"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
+
+	"gin-blog/model"
+	"gin-blog/pkg/app"
+	"gin-blog/pkg/e"
+	"gin-blog/pkg/setting"
+	"gin-blog/pkg/utils"
 )
 
 // 获取多个文章标签
@@ -35,6 +37,7 @@ func GetTags(c *gin.Context) {
 	data["lists"] = model.GetTags(utils.Getpage(c), setting.Server.PageSize, maps)
 	data["total"] = model.GetTagTotal(maps)
 
+	code = 20001
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
 		"msg":  e.GetMsg(code),
@@ -70,7 +73,7 @@ func EditTag(c *gin.Context) {
 
 	err := c.ShouldBind(&tag)
 	// set delete to nil
-	//tag.DeletedAt = nil
+	// tag.DeletedAt = nil
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

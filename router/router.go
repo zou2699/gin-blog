@@ -2,9 +2,11 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/zou2699/learnGin2/router/api"
-	"github.com/zou2699/learnGin2/router/api/v1"
-	"github.com/zou2699/learnGin2/router/static"
+
+	"gin-blog/middleware"
+	"gin-blog/router/api"
+	"gin-blog/router/api/v1"
+	"gin-blog/router/static"
 )
 
 func InitRouter() *gin.Engine {
@@ -16,10 +18,14 @@ func InitRouter() *gin.Engine {
 		    gin.SetMode(setting.RunMode)
 	*/
 	r := gin.Default()
-	r.POST("/auth", api.GetAuth)
+	r.Use(middleware.Cors())
+
+	r.POST("/user/login", api.GetAuth)
+	r.GET("/user/info", v1.UserInfo)
+	r.POST("/user/logout", api.Logout)
 
 	apiv1 := r.Group("/api/v1")
-	//apiv1.Use(middleware.Jwt())
+	apiv1.Use(middleware.Jwt())
 	{
 		// tag
 		apiv1.GET("/tags", v1.GetTags)
@@ -27,15 +33,15 @@ func InitRouter() *gin.Engine {
 		apiv1.PUT("/tags/:id", v1.EditTag)
 		apiv1.DELETE("/tags/:id", v1.DeleteTag)
 		// article
-		//获取文章列表
+		// 获取文章列表
 		apiv1.GET("/articles", v1.GetArticles)
-		//获取指定文章
+		// 获取指定文章
 		apiv1.GET("/articles/:id", v1.GetArticle)
-		//新建文章
+		// 新建文章
 		apiv1.POST("/articles", v1.AddArticle)
-		//更新指定文章
+		// 更新指定文章
 		apiv1.PUT("/articles/:id", v1.EditArticle)
-		//删除指定文章
+		// 删除指定文章
 		apiv1.DELETE("/articles/:id", v1.DeleteArticle)
 	}
 

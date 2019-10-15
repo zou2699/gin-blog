@@ -7,7 +7,7 @@ import (
 type Article struct {
 	Model
 
-	Tag   Tag `form:"-" json:"tag"` //json:"tag"`
+	Tag   Tag `form:"-" json:"tag"` // json:"tag"`
 	TagID int `form:"tag_id" json:"tag_id" gorm:"index" bind:"required"`
 
 	Title      string `form:"title" json:"title" bind:"required"`

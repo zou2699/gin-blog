@@ -9,6 +9,7 @@ const (
 	ErrorNotExistTag     = 10002
 	ErrorNotExistArticle = 10003
 
+	AuthSuccess                = 20000
 	ErrorAuthCheckTokenFail    = 20001
 	ErrorAuthCheckTokenTimeout = 20002
 	ErrorAuthToken             = 20003

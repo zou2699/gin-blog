@@ -9,13 +9,15 @@ package main
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/zou2699/learnGin2/model"
-	"github.com/zou2699/learnGin2/pkg/setting"
-	"github.com/zou2699/learnGin2/router"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/gin-gonic/gin"
+
+	"gin-blog/model"
+	"gin-blog/pkg/setting"
+	"gin-blog/router"
 )
 
 func main() {
@@ -32,7 +34,7 @@ func main() {
 		Handler:        r,
 		ReadTimeout:    time.Duration(setting.Server.ReadTimeout) * time.Second,
 		WriteTimeout:   time.Duration(setting.Server.WriteTimeout) * time.Second,
-		MaxHeaderBytes: 1 << 20, //1MB
+		MaxHeaderBytes: 1 << 20, // 1MB
 	}
 
 	err := s.ListenAndServe()

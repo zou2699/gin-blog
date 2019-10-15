@@ -1,10 +1,12 @@
 package utils
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/zou2699/learnGin2/pkg/setting"
 	"log"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
+
+	"gin-blog/pkg/setting"
 )
 
 func Getpage(c *gin.Context) int {

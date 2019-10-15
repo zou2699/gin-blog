@@ -11,4 +11,5 @@ var MsgFlags = map[int]string{
 	ErrorAuthCheckTokenTimeout: "Token已超时",
 	ErrorAuthToken:             "Token生成失败",
 	ErrorAuth:                  "Token错误",
+	AuthSuccess:                "login success",
 }
